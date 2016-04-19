@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
 
-FILES=$(ls -1 *.md | sort )
+FILES=$(ls -1 docs/*.md | sort )
 
 TEMP_FILE=$(mktemp -u)
 
 cat ${FILES[@]} > $TEMP_FILE
+
+cat biblio/*.bib > bibliography.bib
 
 # The docx
 pandoc \
@@ -13,6 +15,7 @@ pandoc \
     --filter pandoc-citeproc \
     $TEMP_FILE
 
+# The pdf
 pandoc \
     --smart \
     --output document.pdf \
